@@ -74,11 +74,7 @@ All protected routes require a Bearer JWT token in the `Authorization` header.
 
 | Login | Signup | Dashboard | Tasks |
 |-------|--------|-----------|-------|
-| ![Login](public/one.png) | ![Signup](public/two.png) | ![Dashboard](public/three.png) | ![Tasks](public/four.png) |
-
----
-
-
+| ![Login](Frontend/assignment/public/one.png) | ![Signup](Frontend/assignment/public/two.png) | ![Dashboard](Frontend/assignment/public/three.png) | ![Tasks](Frontend/assignment/public/four.png) |
 
 ---
 
