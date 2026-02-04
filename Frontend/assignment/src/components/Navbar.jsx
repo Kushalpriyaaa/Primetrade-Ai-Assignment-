@@ -1,4 +1,5 @@
 import { useState } from "react";
+import ProfileCard from "./ProfileCard";
 import { useNavigate, useLocation } from "react-router-dom";
 import { logout } from "../utils/auth";
 import {
@@ -13,15 +14,27 @@ import {
   DialogContent,
   DialogContentText,
   DialogActions,
+  Drawer,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  useMediaQuery,
+  useTheme,
 } from "@mui/material";
 import TaskIcon from "@mui/icons-material/Task";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import LogoutIcon from "@mui/icons-material/Logout";
+import MenuIcon from "@mui/icons-material/Menu";
 
-const Navbar = () => {
+const Navbar = ({ user }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const [logoutDialogOpen, setLogoutDialogOpen] = useState(false);
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
   const handleLogout = () => {
     logout();
@@ -29,6 +42,7 @@ const Navbar = () => {
   };
 
   const isActive = (path) => location.pathname === path;
+
 
   return (
     <>
@@ -39,37 +53,98 @@ const Navbar = () => {
             Todo App
           </Typography>
 
-          <Box sx={{ display: "flex", gap: 1 }}>
-            <Button
-              onClick={() => navigate("/dashboard")}
-              startIcon={<DashboardIcon />}
-              sx={{
-                color: isActive("/dashboard") ? "primary.main" : "text.primary",
-                fontWeight: isActive("/dashboard") ? 600 : 400,
-              }}
+          {/* Desktop Nav */}
+          {!isMobile && (
+            <Box sx={{ display: "flex", gap: 1 }}>
+              <Button
+                onClick={() => navigate("/dashboard")}
+                startIcon={<DashboardIcon />}
+                sx={{
+                  color: isActive("/dashboard") ? "primary.main" : "text.primary",
+                  fontWeight: isActive("/dashboard") ? 600 : 400,
+                }}
+              >
+                Dashboard
+              </Button>
+              <Button
+                onClick={() => navigate("/tasks")}
+                startIcon={<TaskIcon />}
+                sx={{
+                  color: isActive("/tasks") ? "primary.main" : "text.primary",
+                  fontWeight: isActive("/tasks") ? 600 : 400,
+                }}
+              >
+                Tasks
+              </Button>
+              <Button
+                onClick={() => setLogoutDialogOpen(true)}
+                startIcon={<LogoutIcon />}
+                color="error"
+              >
+                Logout
+              </Button>
+            </Box>
+          )}
+
+          {/* Mobile Nav */}
+          {isMobile && (
+            <IconButton
+              edge="end"
+              color="inherit"
+              aria-label="menu"
+              onClick={() => setDrawerOpen(true)}
             >
-              Dashboard
-            </Button>
-            <Button
-              onClick={() => navigate("/tasks")}
-              startIcon={<TaskIcon />}
-              sx={{
-                color: isActive("/tasks") ? "primary.main" : "text.primary",
-                fontWeight: isActive("/tasks") ? 600 : 400,
-              }}
-            >
-              Tasks
-            </Button>
-            <Button
-              onClick={() => setLogoutDialogOpen(true)}
-              startIcon={<LogoutIcon />}
-              color="error"
-            >
-              Logout
-            </Button>
-          </Box>
+              <MenuIcon />
+            </IconButton>
+          )}
         </Toolbar>
       </AppBar>
+
+      {/* Drawer for mobile */}
+      <Drawer
+        anchor="right"
+        open={drawerOpen}
+        onClose={() => setDrawerOpen(false)}
+      >
+        <Box sx={{ width: 260, pt: 2 }} role="presentation" onClick={() => setDrawerOpen(false)}>
+          {/* ProfileCard for mobile */}
+          {user && (
+            <Box sx={{ mb: 2 }}>
+              <ProfileCard user={user} />
+            </Box>
+          )}
+          <List>
+            <ListItem disablePadding>
+              <ListItemButton onClick={() => navigate("/dashboard")}
+                selected={isActive("/dashboard")}
+              >
+                <ListItemIcon>
+                  <DashboardIcon color={isActive("/dashboard") ? "primary" : "inherit"} />
+                </ListItemIcon>
+                <ListItemText primary="Dashboard" />
+              </ListItemButton>
+            </ListItem>
+            <ListItem disablePadding>
+              <ListItemButton onClick={() => navigate("/tasks")}
+                selected={isActive("/tasks")}
+              >
+                <ListItemIcon>
+                  <TaskIcon color={isActive("/tasks") ? "primary" : "inherit"} />
+                </ListItemIcon>
+                <ListItemText primary="Tasks" />
+              </ListItemButton>
+            </ListItem>
+            <ListItem disablePadding>
+              <ListItemButton onClick={() => setLogoutDialogOpen(true)}>
+                <ListItemIcon>
+                  <LogoutIcon color="error" />
+                </ListItemIcon>
+                <ListItemText primary="Logout" sx={{ color: "error.main" }} />
+              </ListItemButton>
+            </ListItem>
+          </List>
+        </Box>
+      </Drawer>
 
       <Dialog open={logoutDialogOpen} onClose={() => setLogoutDialogOpen(false)}>
         <DialogTitle>Confirm Logout</DialogTitle>

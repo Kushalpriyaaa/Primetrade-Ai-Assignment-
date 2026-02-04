@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import API from "../Services/api";
 import Navbar from "../components/Navbar";
+import ProfileCard from "../components/ProfileCard";
 import Loader from "../components/Loader";
 import { useNavigate } from "react-router-dom";
 import {
@@ -90,95 +91,57 @@ const Dashboard = () => {
 
   return (
     <>
-      <Navbar />
-      <Box 
-        sx={{ 
-          minHeight: "100vh", 
-          width: "100%", 
-          bgcolor: "#f5f5f5", 
-          pt: 10, 
-          pb: 6,
-          display: "flex",
-          justifyContent: "flex-start",
-          alignItems: "flex-start"
+      <Navbar user={user} />
+      <Box
+        sx={{
+          minHeight: "100vh",
+          width: "100%",
+          bgcolor: "#f5f5f5",
+          pt: { xs: 8, md: 10 },
+          pb: { xs: 3, md: 6 },
+          px: { xs: 0, md: 0 },
         }}
       >
-        <Box sx={{ width: "100%", display: "flex", gap: 4, px: 4 }}>
-          
-          {/* Left Side - Profile Card */}
-          <Box sx={{ width: "300px", flexShrink: 0 }}>
-            <Paper 
-              elevation={0}
-              sx={{ 
-                p: 3, 
-                border: "1px solid #e0e0e0",
-                borderRadius: 2,
-                position: "sticky",
-                top: "80px"
-              }}
-            >
-              <Typography variant="h6" fontWeight={600} mb={3}>
-                Profile
-              </Typography>
-              
-              <Stack spacing={2} alignItems="center" mb={3}>
-                <Avatar
-                  sx={{
-                    width: 90,
-                    height: 90,
-                    bgcolor: "primary.main",
-                    fontSize: 36,
-                    fontWeight: 600,
-                  }}
-                >
-                  {getInitials(user?.name)}
-                </Avatar>
-                <Box textAlign="center">
-                  <Typography variant="h6" fontWeight={600} mb={0.5}>
-                    {user?.name}
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    {user?.email}
-                  </Typography>
-                </Box>
-              </Stack>
-
-              <Divider sx={{ my: 2 }} />
-
-              <Stack spacing={1.5}>
-                <Box>
-                  <Typography variant="caption" color="text.secondary" fontWeight={500}>
-                    Member Since
-                  </Typography>
-                  <Typography variant="body2" color="text.primary">
-                    {formatDate(user?.createdAt)}
-                  </Typography>
-                </Box>
-                <Box>
-                  <Typography variant="caption" color="text.secondary" fontWeight={500}>
-                    Account Status
-                  </Typography>
-                  <Typography variant="body2" color="success.main" fontWeight={500}>
-                    Active
-                  </Typography>
-                </Box>
-              </Stack>
-            </Paper>
+        <Box
+          sx={{
+            width: "100%",
+            display: "flex",
+            flexDirection: { xs: "column", md: "row" },
+            gap: { xs: 2, md: 4 },
+            px: { xs: 1, sm: 2, md: 4 },
+            alignItems: "flex-start",
+          }}
+        >
+          {/* Left Side - Profile Card (Desktop only) */}
+          <Box
+            sx={{
+              width: { xs: "100%", md: 300 },
+              flexShrink: 0,
+              mb: { xs: 3, md: 0 },
+              display: { xs: "none", md: "block" },
+            }}
+          >
+            <ProfileCard user={user} />
           </Box>
 
           {/* Right Side - Main Content */}
-          <Box sx={{ flex: 1, maxWidth: "900px", margin: "0 auto" }}>
-            
+          <Box
+            sx={{
+              flex: 1,
+              maxWidth: { xs: "100%", md: 900 },
+              margin: { xs: "0 auto", md: "0 auto" },
+            }}
+          >
             {/* Welcome Section */}
-            <Paper 
+            <Paper
               elevation={0}
-              sx={{ 
-                p: 4, 
-                mb: 4,
+              sx={{
+                p: { xs: 2, md: 4 },
+                mb: { xs: 2, md: 4 },
                 border: "1px solid #e0e0e0",
                 borderRadius: 2,
                 textAlign: "center",
-                bgcolor: "#fff"
+                bgcolor: "#fff",
               }}
             >
               <Typography variant="h4" fontWeight={500} color="text.primary" mb={1}>
@@ -190,15 +153,15 @@ const Dashboard = () => {
             </Paper>
 
             {/* Stats Section */}
-            <Grid container spacing={3} mb={4}>
+            <Grid container spacing={2} mb={{ xs: 2, md: 4 }}>
               <Grid item xs={12} sm={4}>
-                <Paper 
+                <Paper
                   elevation={0}
-                  sx={{ 
-                    p: 3.5, 
+                  sx={{
+                    p: { xs: 2, md: 3.5 },
                     textAlign: "center",
                     border: "1px solid #e0e0e0",
-                    borderRadius: 2
+                    borderRadius: 2,
                   }}
                 >
                   <Typography variant="body2" color="text.secondary" mb={1} fontWeight={500}>
@@ -210,13 +173,13 @@ const Dashboard = () => {
                 </Paper>
               </Grid>
               <Grid item xs={12} sm={4}>
-                <Paper 
+                <Paper
                   elevation={0}
-                  sx={{ 
-                    p: 3.5, 
+                  sx={{
+                    p: { xs: 2, md: 3.5 },
                     textAlign: "center",
                     border: "1px solid #e0e0e0",
-                    borderRadius: 2
+                    borderRadius: 2,
                   }}
                 >
                   <Typography variant="body2" color="text.secondary" mb={1} fontWeight={500}>
@@ -228,13 +191,13 @@ const Dashboard = () => {
                 </Paper>
               </Grid>
               <Grid item xs={12} sm={4}>
-                <Paper 
+                <Paper
                   elevation={0}
-                  sx={{ 
-                    p: 3.5, 
+                  sx={{
+                    p: { xs: 2, md: 3.5 },
                     textAlign: "center",
                     border: "1px solid #e0e0e0",
-                    borderRadius: 2
+                    borderRadius: 2,
                   }}
                 >
                   <Typography variant="body2" color="text.secondary" mb={1} fontWeight={500}>
@@ -248,101 +211,100 @@ const Dashboard = () => {
             </Grid>
 
             {/* Recent Tasks Card */}
-            <Paper 
+            <Paper
               elevation={0}
-              sx={{ 
-                p: 3,
+              sx={{
+                p: { xs: 2, md: 3 },
                 border: "1px solid #e0e0e0",
-                borderRadius: 2
+                borderRadius: 2,
               }}
             >
-                <Stack
-                  direction="row"
-                  justifyContent="space-between"
-                  alignItems="center"
-                  mb={3}
+              <Stack
+                direction="row"
+                justifyContent="space-between"
+                alignItems="center"
+                mb={3}
+              >
+                <Typography variant="h6" fontWeight={600}>
+                  Recent Tasks
+                </Typography>
+                <Typography
+                  component="button"
+                  variant="body2"
+                  onClick={() => navigate("/tasks")}
+                  sx={{
+                    background: "none",
+                    border: "none",
+                    cursor: "pointer",
+                    fontWeight: 500,
+                    color: "primary.main",
+                    "&:hover": {
+                      textDecoration: "underline",
+                    },
+                  }}
                 >
-                  <Typography variant="h6" fontWeight={600}>
-                    Recent Tasks
-                  </Typography>
-                  <Typography
-                    component="button"
-                    variant="body2"
-                    onClick={() => navigate("/tasks")}
-                    sx={{ 
-                      background: "none",
-                      border: "none",
-                      cursor: "pointer",
-                      fontWeight: 500,
-                      color: "primary.main",
-                      "&:hover": {
-                        textDecoration: "underline"
-                      }
-                    }}
-                  >
-                    View all →
-                  </Typography>
-                </Stack>
+                  View all →
+                </Typography>
+              </Stack>
 
-                {recentTasks.length === 0 ? (
-                  <Box 
-                    sx={{ 
-                      textAlign: "center", 
-                      py: 6,
-                      color: "text.secondary"
-                    }}
-                  >
-                    <Typography variant="body2">
-                      No tasks yet. Create your first task to get started.
-                    </Typography>
-                  </Box>
-                ) : (
-                  <Stack spacing={2}>
-                    {recentTasks.map((task) => (
-                      <Box
-                        key={task._id}
+              {recentTasks.length === 0 ? (
+                <Box
+                  sx={{
+                    textAlign: "center",
+                    py: 6,
+                    color: "text.secondary",
+                  }}
+                >
+                  <Typography variant="body2">
+                    No tasks yet. Create your first task to get started.
+                  </Typography>
+                </Box>
+              ) : (
+                <Stack spacing={2}>
+                  {recentTasks.map((task) => (
+                    <Box
+                      key={task._id}
+                      sx={{
+                        p: 2,
+                        border: "1px solid #e0e0e0",
+                        borderRadius: 1.5,
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                        bgcolor: "#fafafa",
+                        transition: "all 0.2s",
+                        "&:hover": {
+                          bgcolor: "#f5f5f5",
+                          borderColor: "#d0d0d0",
+                        },
+                      }}
+                    >
+                      <Typography
+                        variant="body2"
                         sx={{
-                          p: 2,
-                          border: "1px solid #e0e0e0",
-                          borderRadius: 1.5,
-                          display: "flex",
-                          justifyContent: "space-between",
-                          alignItems: "center",
-                          bgcolor: "#fafafa",
-                          transition: "all 0.2s",
-                          "&:hover": {
-                            bgcolor: "#f5f5f5",
-                            borderColor: "#d0d0d0"
-                          }
+                          textDecoration: task.completed ? "line-through" : "none",
+                          color: task.completed ? "text.secondary" : "text.primary",
+                          fontWeight: task.completed ? 400 : 500,
                         }}
                       >
-                        <Typography
-                          variant="body2"
-                          sx={{
-                            textDecoration: task.completed ? "line-through" : "none",
-                            color: task.completed ? "text.secondary" : "text.primary",
-                            fontWeight: task.completed ? 400 : 500
-                          }}
-                        >
-                          {task.title}
-                        </Typography>
-                        <Chip
-                          label={task.completed ? "Done" : "Pending"}
-                          size="small"
-                          sx={{
-                            bgcolor: task.completed ? "#e8f5e9" : "#fff3e0",
-                            color: task.completed ? "#2e7d32" : "#ed6c02",
-                            fontWeight: 500,
-                            border: "none"
-                          }}
-                        />
-                      </Box>
-                    ))}
-                  </Stack>
-                )}
-              </Paper>
+                        {task.title}
+                      </Typography>
+                      <Chip
+                        label={task.completed ? "Done" : "Pending"}
+                        size="small"
+                        sx={{
+                          bgcolor: task.completed ? "#e8f5e9" : "#fff3e0",
+                          color: task.completed ? "#2e7d32" : "#ed6c02",
+                          fontWeight: 500,
+                          border: "none",
+                        }}
+                      />
+                    </Box>
+                  ))}
+                </Stack>
+              )}
+            </Paper>
           </Box>
-
         </Box>
       </Box>
     </>
