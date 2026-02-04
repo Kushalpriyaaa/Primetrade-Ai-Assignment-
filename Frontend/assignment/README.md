@@ -1,16 +1,88 @@
-# React + Vite
+# Primetrade Task Manager — Fullstack Assignment
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Overview
+This is a fullstack web application for task management, built as part of the Primetrade Frontend Developer Intern assignment. It features user authentication, a dashboard, and CRUD operations for tasks, with a modern UI and secure backend.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Tech Stack
+- **Frontend:** React.js (Vite), Material UI, Axios, React Router
+- **Backend:** Node.js, Express.js, MongoDB (Mongoose), JWT, bcryptjs, express-validator, morgan
 
-## React Compiler
+---
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Setup Instructions
 
-## Expanding the ESLint configuration
+### 1. Clone the repository
+```
+git clone <your-fork-or-repo-url>
+cd Primetrade-Ai-Assignment-
+```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### 2. Backend Setup
+```
+cd Backend
+npm install
+```
+Create a `.env` file in the Backend folder:
+```
+PORT=5000
+MONGO_URI=mongodb://127.0.0.1:27017/primetrade
+JWT_SECRET=supersecretkey
+```
+Start the backend server:
+```
+npm run dev
+```
+
+### 3. Frontend Setup
+```
+cd ../Frontend/assignment
+npm install
+npm run dev
+```
+The frontend will run on [http://localhost:5173](http://localhost:5173) by default.
+
+---
+
+## Demo Credentials (Optional)
+- You can register a new user or use seeded credentials if provided.
+
+---
+
+## API Documentation
+
+### Auth
+- `POST /api/v1/auth/signup` — Register
+- `POST /api/v1/auth/login` — Login
+
+### Profile
+- `GET /api/v1/me` — Get profile (JWT required)
+- `PUT /api/v1/me` — Update profile (JWT required)
+
+### Tasks
+- `POST /api/v1/tasks` — Create task
+- `GET /api/v1/tasks` — List tasks
+- `PUT /api/v1/tasks/:id` — Update task
+- `DELETE /api/v1/tasks/:id` — Delete task
+
+All protected routes require a Bearer JWT token in the `Authorization` header.
+
+---
+
+## Screenshots
+
+| Login | Signup | Dashboard | Tasks |
+|-------|--------|-----------|-------|
+| ![Login](public/one.png) | ![Signup](public/two.png) | ![Dashboard](public/three.png) | ![Tasks](public/four.png) |
+
+---
+
+
+
+---
+
+
+
+
+

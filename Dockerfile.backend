@@ -1,0 +1,18 @@
+# Dockerfile for Backend (Node.js + Express)
+FROM node:18-alpine
+
+# Set working directory
+WORKDIR /app
+
+# Copy package files and install dependencies
+COPY Backend/package*.json ./
+RUN npm install
+
+# Copy backend source code
+COPY Backend/ ./
+
+# Expose backend port
+EXPOSE 5000
+
+# Start the backend server
+CMD ["npm", "run", "dev"]
